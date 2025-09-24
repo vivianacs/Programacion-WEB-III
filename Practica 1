@@ -1,0 +1,276 @@
+//1. Crear una función que cuente cuántas veces aparece cada vocal en un texto y devuelva el resultado en un objeto.
+function vocales(x) {
+    console.log("Número de vocales:");
+    let v = {
+        a:0,
+        e:0,
+        i:0,
+        o:0,
+        u:0
+    };
+    for (let i of x){
+        switch (i) {
+            case "a": case "A":
+                v.a++
+                break;
+            case "e": case "E":
+                v.e++
+                break;
+            case "i": case "I":
+                v.i++
+                break;
+            case "o": case "O":
+                v.o++
+                break;
+            case "u": case "U":
+                v.u++
+                break;
+        }
+    };
+    return v;
+}
+let cont = vocales("murcielago")
+console.log(cont);
+
+//2. Crear una función que invierta el orden de las palabras en una frase.
+function orden(x) {
+    console.log("Palabra invertida:");
+    let res="";
+    for (let i=x.length-1;i>=0;i--){
+    res=res+x[i];
+    }
+    return res
+}
+let inv = orden("abcd")
+console.log(inv);
+
+//3. Crear una función que reciba un arreglo de números y devuelva en un objeto a los pares e impares.
+function pi(a) {
+    let par = [];
+    let impar = [];
+    console.log("Devolucion:");
+    
+    for (let n of a) {
+        if (n % 2 == 0) {
+            par[par.length] = n;
+        } else {
+            impar[impar.length] = n;
+        }
+    }
+    return { pares: par, impares: impar };
+}
+let p = pi([7,3,9,2,4,5]) 
+console.log(p);
+
+//4. Crear una función que reciba un arreglo de números y devuelva el número mayor y el menor, en un objeto.
+function mm(a) {
+    let may = [0];
+    let men = [0];
+    console.log("Resultado:");
+    for (let n of a) {
+        if (n>may) {
+            may = n;
+        }
+        if (n<men) {
+            men = n;
+        }
+    }
+    return {mayor: may,menor: men}
+}
+let num = mm([4,21,89,-25,12])
+console.log(num);
+
+//5. Crear una función que determine si una cadena es palíndromo (se lee igual al derecho y al revés).
+function palindromo(x) {
+    let cad = x.length;
+    for (let i=0;i<cad/2;i++) {
+        if (x[i] !== x[cad-1-i]) {
+            return false;
+        }
+    }
+    return true;
+}
+let es = palindromo("oso")
+console.log(es);
+
+//6. Tomar los dos primeros elementos de un arreglo y almacenarlos en dos variables mediante desestructuración.
+let arreglo = ["Escritorio", 23, 12, "Laptop"];
+let [a, b] = arreglo;
+console.log("Los dos primeros elementos del arreglo son:",a, b);
+
+//7. Almacenar el resto de los elementos de un arreglo sin tomar en cuenta los dos primeros elementos de un arreglo, mediante desestructuración.
+let arreglo = ["Botella",21,"Cuaderno",45,11,"Taza"];
+let [,, ...sobra] = arreglo;
+console.log("Lo que queda es:",sobra);
+
+//8. Realizar un código para ejecutar una función callback después 2 segundos.
+function callBack() {
+    console.log("Hola");
+}
+setTimeout(callBack, 2000);
+
+//9. Crear una promesa que devuelva un mensaje de éxito después de 3 segundos.
+let promesa = new Promise((resolve) => {
+    setTimeout(() => {
+        resolve("EXITO")
+    }, 3000);
+})
+promesa.then((msj) => {
+    console.log(msj);
+});
+//10. ¿Cuando es conveniente utilizar un callback, y cuando es necesario utilizar una promesa? 
+//Un callback es una función que se pasa como argumento a otra función y se ejecuta después de que se completa una operación, es conveniente utilizarlo cuando se trabaja con APIs antiguas o librerías que no soportan promesas, para operaciones simples y lineales, como leer un archivo o hacer una operación básica y en entornos donde no se necesita manejar múltiples pasos asincrónicos encadenados.
+//Una promesa representa un valor que puede estar disponible ahora, en el futuro o nunca. Permite manejar operaciones asincrónicas de forma más estructurada, es conveniente utilizarlo cuando se necesita encadenar múltiples operaciones asincrónicas, para un mejor manejo de errores con .catch() o try/catch en async/await.
+
+//11. Proporcione un ejemplo concreto de encadenamiento de promesas.
+let promesa = new Promise((resolve) => {
+    resolve(2)
+});
+let res = num => new Promise((resolve) => {
+    resolve(num-3)
+});
+let mul = num => new Promise((resolve) => {
+    setTimeout(() => {
+        resolve(num*5)
+    }, 4000)
+});
+promesa
+  .then(res)
+  .then(mul)
+  .then(res => {
+    console.log(res,"(21)")
+});
+
+//12. Proporcione un ejemplo concreto donde el anidamiento de callbacks se puede reescribir mejor con async/await haciendo el código más limpio y mantenible.
+function t1(callback) {
+    setTimeout(() => {
+        callback("Callback 1")
+    }, 5000);
+}
+function t2(callback) {
+    setTimeout(() => {
+        callback("Callback 2")
+    }, 5000);
+}
+t1(r1 => {
+    console.log(r1);
+    t2(r2 => {
+        console.log(r2); 
+    });
+});
+let promesa1 = new Promise((resolve) => {
+    setTimeout(() => {
+        resolve("Async")
+    }, 6000)
+});
+let promesa2 = new Promise((resolve) => {
+    setTimeout(() => {
+        resolve("Await")
+    }, 6000)
+});
+async function sol() {
+    let r1 = await promesa1;
+    console.log(r1);
+    let r2 = await promesa2;
+    console.log(r2);
+}
+sol();
+
+//13. Proporcione un ejemplo concreto donde el anidamiento de promesas se puede reescribir mejor con async/await haciendo el código más limpio y mantenible.
+let promesa = new Promise((resolve) => {
+    setTimeout(() => {
+        resolve(5)}
+        , 7000)
+});
+let promesa2 = (num) => new Promise((resolve) => {
+    setTimeout(() => {
+        resolve(num * 2)
+    }, 7000)
+});
+promesa
+  .then(res => {
+      console.log("Un numero:", res);
+      promesa2(res)
+        .then(res2 => {
+            console.log("Multiplicado por 2:", res2); 
+        });
+  });
+let promesa3 = new Promise((resolve) => {
+    setTimeout(() => {
+        resolve(5)
+    }, 7000)
+});
+let promesa13d = (num) => new Promise((resolve) => {
+    setTimeout(() => {
+        resolve(num * 2)
+    }, 7000)
+});
+async function sol() {
+    let num = await promesa3;
+    console.log("Un numero:", num);
+    let res3 = await promesa13d(num);
+    console.log("Multiplicado por 2:", res3);
+}
+sol();
+
+//14. Proporcione un ejemplo para convertir una promesa en un callback.
+let promesa = new Promise((resolve) => {
+    setTimeout(() => {
+        resolve(21+12)
+    }, 8000);
+});
+//Lo convertimos en un callback
+function fun(callback) {
+    promesa.then(resultado => {
+        callback(resultado)
+    });
+}
+fun(resultado => {
+    console.log("Resultado", resultado); 
+});
+
+//15. Proporcione un ejemplo para convertir un callback en una promesa.
+function sum(a, b, callback) {
+    setTimeout(() => {
+        let res=a+b;
+        callback(res);
+    }, 9000);
+}
+sum(21,12, resultado => {
+    console.log("Callback:", resultado);
+});
+function prom(a, b) {
+    let promesa = new Promise((resolve) => {
+        sum(a, b, resultado => {
+            resolve(resultado)
+        });
+    });
+    return promesa;
+}
+let promesa2 = prom(21,12);
+promesa2.then(resultado => {
+    console.log("Promesa:", resultado);
+
+//16. Proporcione un ejemplo para migrar una función con promesas a async/await.
+function sum(a, b) {
+    let promesa = new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(a+b)
+        }, 10000);
+    });
+    return promesa;
+}
+let promesa2 = sum(12,4);
+promesa2.then(resultado => {
+    console.log("Promesa:", resultado);
+});
+async function async(a, b) {
+    let promesa3 = new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(a+b)
+        }, 10000);
+    });
+    let resultado = await promesa3;
+    console.log("async/await:", resultado);
+}
+async(12,4);
